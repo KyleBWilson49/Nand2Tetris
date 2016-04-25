@@ -54,13 +54,11 @@ CHIP ALU {
 
     Mux16(a=xandy, b=xplusy, sel=f, out=fout);
     Not16(in=fout, out=nfout);
-    Mux16(a=fout, b=nfout, sel=no, out=out, out[15]=msbout, out[0..7]=out1, out[8..15]=out2);
+    Mux16(a=fout, b=nfout, sel=no, out=out, out[15]=ng, out[0..7]=out1, out[8..15]=out2);
 
     // see if out==0 by noring out
     Or8Way(in=out1, out=notzero1);
     Or8Way(in=out2, out=notzero2);
     Or(a=notzero1, b=notzero2, out=notzero);
     Not(in=notzero, out=zr);
-
-    And(a=msbout, b=true, out=ng);
 }
