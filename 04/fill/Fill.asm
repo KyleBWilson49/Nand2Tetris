@@ -9,3 +9,66 @@
 // program clears the screen, i.e. writes "white" in every pixel.
 
 // Put your code here.
+
+@KBD
+D=A
+@maxaddress
+M=D
+
+// loop and listen to key press
+(LOOP)
+    @KBD
+    D=M;
+    @BLACK
+    D;JNE
+    @WHITE
+    0;JMP
+
+// blacken the screen
+(BLACK)
+    @SCREEN
+    D=A
+    @address
+    M=D
+
+    (BLACKLOOP)
+        @address
+        D=M
+        @maxaddress
+        D=M-D
+        @LOOP
+        D;JEQ
+
+        @address
+        A=M
+        M=-1
+        @address
+        M=M+1
+
+        @BLACKLOOP
+        0;JMP
+
+
+// whiten the screen
+(WHITE)
+    @SCREEN
+    D=A
+    @address
+    M=D
+
+    (WHITELOOP)
+        @address
+        D=M
+        @maxaddress
+        D=M-D
+        @LOOP
+        D;JEQ
+
+        @address
+        A=M
+        M=0
+        @address
+        M=M+1
+
+        @WHITELOOP
+        0;JMP
